@@ -1,5 +1,6 @@
 {
-  "name": "js_vanilla",
+  "name": "challenge1",
+  "homepage": "https://github.com/befily/challenge1.git",
   "private": "true",
   "version": "0.0.0",
   "type": "module",
