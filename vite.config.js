@@ -2,5 +2,5 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/challenge1/"
+  base: "/assignment_1/"
 })
