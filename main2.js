@@ -13,7 +13,7 @@ console.log(width, height);
 let gui;
 const parameters = {
   numberOfSpheres: 50,
-  rotationSpeed: 0.005, // Initial rotation speed
+  rotationSpeed: 0.005,
 };
 
 // CREATE SCENE AND CAMERA
@@ -54,8 +54,8 @@ function setupGUI() {
 // CREATE SPHERES IN A SPIRAL
 function createSpheres() {
   const numberOfSpheres = parameters.numberOfSpheres;
-  const angleIncrement = 0.1; // Adjust the angle increment based on your preference
-  const radiusIncrement = 0.1; // Adjust the radius increment based on your preference
+  const angleIncrement = 0.1;
+  const radiusIncrement = 0.1;
 
   // Create Spheres in a spiral pattern
   for (let i = 0; i < numberOfSpheres; i++) {
@@ -66,11 +66,11 @@ function createSpheres() {
     const x = radius * Math.cos(angle) * 5;
     const y = radius * Math.sin(angle) * 5;
 
-    const geometry = new THREE.SphereGeometry(0.5, 32, 32); // Proper parameters for a sphere
+    const geometry = new THREE.SphereGeometry(0.5, 32, 32);
     const material = new THREE.MeshBasicMaterial({ color: 0xff1493 });
     const sphere = new THREE.Mesh(geometry, material);
 
-    sphere.position.set(x, y, 0); // Adjust the z-coordinate for separation
+    sphere.position.set(x, y, 0);
     scene.add(sphere);
   }
 }
@@ -93,7 +93,7 @@ function animate() {
 
   controls.update();
 
-  // Rotate the entire scene with the specified rotation speed
+//ROTATE THE ENTIRE SPIRAL
   scene.rotation.z += parameters.rotationSpeed;
 
   renderer.render(scene, camera);
