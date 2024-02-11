@@ -22,11 +22,9 @@ let container;
 let control;
 let ambientLight;
 let directionalLight;
-let squareMesh;
-let lines = [];
 
 function drawPoint(point) {
-  const pointGeometry = new THREE.SphereGeometry(0.03, 8, 8); // Adjust radius and segments as needed
+  const pointGeometry = new THREE.SphereGeometry(0.02, 8, 8); // Adjust radius and segments as needed
   const pointMaterial = new THREE.MeshBasicMaterial({ color: 0xFFA500 }); // Red color, you can change it
   const pointMesh = new THREE.Mesh(pointGeometry, pointMaterial);
   pointMesh.position.copy(point);
@@ -73,10 +71,6 @@ function main() {
   const angle1 = randomAngle1();
   const angle2 = calculateAngle2();
   const angle3 = calculateAngle3();
-
-  console.log('Angle 1:', angle1);
-  console.log('Angle 2:', angle2);
-  console.log('Angle 3:', angle3);
   
   const point1A =  new THREE.Vector3(0, 0, 0);
   const point1B = createPoint1B(angle1);
@@ -95,7 +89,7 @@ function main() {
 
 // Generate a random angle in radians between 10 and 90
   function randomAngle1() {
-    const degrees = Math.random() * (80 - 10) + 10;
+    const degrees = Math.random() * (90 - 30) + 30;
     const angle1 = degrees * (Math.PI / 180);
     
     return angle1;
@@ -162,12 +156,12 @@ function main() {
     scene.add(squareMesh);
   }
 
-  createSquare(point1A, point1B, point1C, point1D);
+  //createSquare(point1A, point1B, point1C, point1D);
 
 
   function createPoint2A(angle1) {
 
-    const randomDistance = Math.random() * 0.8 +0.1;
+    const randomDistance = Math.random() * 0.7 + 0.2;
     const x = Math.sin(angle1) * randomDistance;
     const y = Math.cos(angle1) * randomDistance;
     const point2A = new THREE.Vector3(x, y, 0);
@@ -198,12 +192,12 @@ function main() {
     point2B = new THREE.Vector3(point2A.x, y2, 0);
     side = 1;
     }
-    console.log(point2B);
+
     return {point2B, side};
   }
   const { point2B, side } = createPoint2B();
   drawPoint(point2B);
-  console.log(side, point2B);
+  console.log('Side:', side);
 
 
   function createPolygon1A(side){
@@ -248,7 +242,7 @@ function main() {
     scene.add(squareMesh);
   }
 
-  createPolygon1A(side);
+  //createPolygon1A(side);
 
   function createPolygon1B(side){
 
@@ -294,7 +288,7 @@ function main() {
     scene.add(squareMesh);
   }
 
-  createPolygon1B(side);
+  //createPolygon1B(side);
 
 
   function createPoint2C(point2A, point2B) {
@@ -344,12 +338,12 @@ function main() {
     point3A = new THREE.Vector3(x2, point2C.y, 0);
     side2 = 1;
     }
-    console.log(point3A);
+    
     return {point3A, side2};
   }
   const { point3A, side2 } = createPoint3A();
   drawPoint(point3A);
-  console.log(side2, point3A); 
+  console.log('Side 2:', side2); 
 
   function createPoint3B(){
     let point3B;
@@ -374,23 +368,926 @@ function main() {
     point3B= new THREE.Vector3(x2, point2D.y, 0);
     side3 = 1;
     }
-    console.log(point3B);
+    
     return {point3B, side3};
   }
   const { point3B, side3 } = createPoint3B();
   drawPoint(point3B);
-  console.log(side3, point3B); 
+  console.log('Side 3:', side3);
 
+  function createPolygon2A(side, side2){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side2 === 0){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point1B.x, point1B.y, point1B.z,
+          point2A.x, point2A.y, point2A.z,
+          point2C.x, point2C.y, point2C.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ]);
+
+      }else if(side === 0 && side2 === 1){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point1D.x, point1D.y, point1D.z,
+          point1B.x, point1B.y, point1B.z,
+          point2A.x, point2A.y, point2A.z,
+          point2C.x, point2C.y, point2C.z
+        ]);
   
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+        ]);
+      
+      }else if(side === 1 && side2 === 0){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point1B.x, point1B.y, point1B.z,
+          point2A.x, point2A.y, point2A.z,
+          point2C.x, point2C.y, point2C.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ]);
+
+      }else if(side === 1 && side2 === 1){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point1D.x, point1D.y, point1D.z,
+          point1B.x, point1B.y, point1B.z,
+          point2A.x, point2A.y, point2A.z,
+          point2C.x, point2C.y, point2C.z
+        ]);
+  
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+        ])
+      }
+
+  squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+  squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+  scene.add(squareMesh);
+
+  }
+
+  createPolygon2A(side, side2);
+
+  function createPolygon2B(side, side2){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side2 === 0){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point1D.x, point1D.y, point1D.z,
+          point1C.x, point1C.y, point1C.z,
+          point2B.x, point2B.y, point2B.z,
+          point2C.x, point2C.y, point2C.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+        ]);
+
+      }else if(side === 0 && side2 === 1){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point1C.x, point1C.y, point1C.z,
+          point2B.x, point2B.y, point2B.z,
+          point2A.x, point2A.y, point2A.z
+        ]);
+  
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ]);
+      
+      }else if(side === 1 && side2 === 0){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point1D.x, point1D.y, point1D.z,
+          point2B.x, point2B.y, point2B.z,
+          point2C.x, point2C.y, point2C.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ]);
+
+      }else if(side === 1 && side2 === 1){
+        vertices = new Float32Array([
+          point2C.x, point2C.y, point2C.z,
+          point3A.x, point3A.y, point3A.z,
+          point2B.x, point2B.y, point2B.z,
+          point2C.x, point2C.y, point2C.z
+        ]);
+  
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 0
+        ])
+      }
+
+  squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+  squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+  scene.add(squareMesh);
+
+  }
+
+  createPolygon2B(side, side2);
+
+  function createPolygon2C(side, side3){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side3 === 0){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point2A.x, point2A.y, point2A.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 0
+        ]);
+
+      }else if(side === 0 && side3 === 1){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point1A.x, point1A.y, point1A.z,
+          point2A.x, point2A.y, point2A.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+  
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ]);
+      
+      }else if(side === 1 && side3 === 0){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point2A.x, point2A.y, point2A.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 0
+        ]);
+
+      }else if(side === 1 && side3 === 1){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point1A.x, point1A.y, point1A.z,
+          point2A.x, point2A.y, point2A.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+  
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ])
+      }
+
+  squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+  squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+  scene.add(squareMesh);
+
+  }
+
+  createPolygon2C(side, side3);
+
+  function createPolygon2D(side, side3){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side3 === 0){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point1A.x, point1A.y, point1A.z,
+          point2B.x, point2B.y, point2B.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ]);
+
+      }else if(side === 0 && side3 === 1){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point1A.x, point1A.y, point1A.z,
+          point2B.x, point2B.y, point2B.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+  
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ]);
+      
+      }else if(side === 1 && side3 === 0){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point1A.x, point1A.y, point1A.z,
+          point1C.x, point1C.y, point1C.z,
+          point2B.x, point2B.y, point2B.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+        ]);
+
+      }else if(side === 1 && side3 === 1){
+        vertices = new Float32Array([
+          point2D.x, point2D.y, point2D.z,
+          point3B.x, point3B.y, point3B.z,
+          point1C.x, point1C.y, point1C.z,
+          point2B.x, point2B.y, point2B.z,
+          point2D.x, point2D.y, point2D.z
+        ]);
+  
+        indices = new Uint16Array([
+            0, 1, 1, 2, 2, 3, 3, 0
+        ])
+      }
+
+  squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+  squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+  scene.add(squareMesh);
+
+  }
+
+  createPolygon2D(side, side3);
+
+  function createPoint3C(point2C, point3A) {
+
+    const x = (point3A.x - point2C.x) * Math.random() + point2C.x;
+    const y = point2C.y;
+    const point3C = new THREE.Vector3(x, y, 0);
+
+    return point3C;
+  }
+
+  const point3C = createPoint3C(point2C, point3A);
+  drawPoint(point3C);
+
+  function createPoint3D(point2C, point3A) {
+
+    const x = (point3A.x - point2C.x) * Math.random() + point2C.x;
+    const y = point2C.y;
+    const point3D = new THREE.Vector3(x, y, 0);
+
+    return point3D;
+  }
+
+  const point3D = createPoint3D(point2C, point3A);
+  drawPoint(point3D);
 
 
+  function createPoint3E(point2D, point3B) {
+
+    const x = (point3B.x - point2D.x) * Math.random() + point2D.x;
+    const y = point2D.y;
+    const point3E = new THREE.Vector3(x, y, 0);
+
+    return point3E;
+  }
+
+  const point3E = createPoint3E(point2D, point3B);
+  drawPoint(point3E);
+
+  function createPoint3F(point2D, point3B) {
+
+    const x = (point3B.x - point2D.x) * Math.random() + point2D.x;
+    const y = point2D.y;
+    const point3F = new THREE.Vector3(x, y, 0);
+
+    return point3F;
+  }
+
+  const point3F = createPoint3F(point2D, point3B);
+  drawPoint(point3F);
+
+  function createPoint4A(){
+    let point4A;
+    let side4;
+    if (point3C.x <= point1B.x)
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1B.y - point1A.y) / (point1B.x - point1A.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3C.x - point1A.x;
+    const y2 = point1A.y + m1 * dx2;
+    point4A = new THREE.Vector3(point3C.x, y2, 0);
+    side4 = 0;
+    }
+    else
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1D.y - point1B.y) / (point1D.x - point1B.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3C.x - point1D.x;
+    const y2 = point1D.y + m1 * dx2;
+    point4A = new THREE.Vector3(point3C.x, y2, 0);
+    side4 = 1;
+    }
+
+    return {point4A, side4};
+  }
+  const { point4A, side4 } = createPoint4A();
+  drawPoint(point4A);
+  console.log('Side 4:', side4);
+
+  function createPoint4B(){
+    let point4B;
+    let side5;
+    if (point3D.x <= point1C.x)
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1C.y - point1A.y) / (point1C.x - point1A.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3D.x - point1A.x;
+    const y2 = point1A.y + m1 * dx2;
+    point4B = new THREE.Vector3(point3D.x, y2, 0);
+    side5 = 0;
+    }
+    else
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1D.y - point1C.y) / (point1D.x - point1C.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3D.x - point1C.x;
+    const y2 = point1C.y + m1 * dx2;
+    point4B = new THREE.Vector3(point3D.x, y2, 0);
+    side5 = 1;
+    }
+
+    return {point4B, side5};
+  }
+  const { point4B, side5 } = createPoint4B();
+  drawPoint(point4B);
+  console.log('Side 5:', side5);
+
+  function createPoint4C(){
+    let point4C;
+    let side6;
+    if (point3E.x <= point1B.x)
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1B.y - point1A.y) / (point1B.x - point1A.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3E.x - point1A.x;
+    const y2 = point1A.y + m1 * dx2;
+    point4C = new THREE.Vector3(point3E.x, y2, 0);
+    side6 = 0;
+    }
+    else
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1D.y - point1B.y) / (point1D.x - point1B.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3D.x - point1D.x;
+    const y2 = point1D.y + m1 * dx2;
+    point4C = new THREE.Vector3(point3D.x, y2, 0);
+    side6 = 1;
+    }
+
+    return {point4C, side6};
+  }
+  const { point4C, side6 } = createPoint4C();
+  drawPoint(point4C);
+  console.log('Side 6:', side6);
+
+  function createPoint4D(){
+    let point4D;
+    let side7;
+    if (point3F.x <= point1C.x)
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1C.y - point1A.y) / (point1C.x - point1A.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3F.x - point1A.x;
+    const y2 = point1A.y + m1 * dx2;
+    point4D = new THREE.Vector3(point3F.x, y2, 0);
+    side7 = 0;
+    }
+    else
+    {
+    // Steigung P1A - P1C
+    const m1 = (point1D.y - point1C.y) / (point1D.x - point1C.x);
+    // x Abstand P2A - P1A
+    const dx2 = point3F.x - point1C.x;
+    const y2 = point1C.y + m1 * dx2;
+    point4D = new THREE.Vector3(point3F.x, y2, 0);
+    side7 = 1;
+    }
+
+    return {point4D, side7};
+  }
+  const { point4D, side7 } = createPoint4D();
+  drawPoint(point4D);
+  console.log('Side 7:', side7);
+
+  function createPolygon3A(side, side2, side4){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side2 === 0 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ]);
+
+    }else if(side === 0 && side2 === 0 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 0
+      ]);
+      
+    }else if(side === 0 && side2 === 1 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point1D.x, point1D.y, point1D.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+
+      indices = new Uint16Array([
+           0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ]);
+
+    }else if(side === 0 && side2 === 1 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point1D.x, point1D.y, point1D.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ])
+
+    }else if(side === 1 && side2 === 0 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ])
+
+    }else if(side === 1 && side2 === 0 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 0
+      ])
+
+    }else if(side === 1 && side2 === 1 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point1D.x, point1D.y, point1D.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ])
+
+    }else if(side === 1 && side2 === 1 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point3A.x, point3A.y, point3A.z,
+        point1D.x, point1D.y, point1D.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ])
+
+    }
+
+    squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+    scene.add(squareMesh);
+
+  }
+
+  createPolygon3A(side, side2, side4);
+
+  function createPolygon3B(side, side2, side4){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side2 === 0 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ]);
+
+    }else if(side === 0 && side2 === 0 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ]);
+      
+    }else if(side === 0 && side2 === 1 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+
+      indices = new Uint16Array([
+           0, 1, 1, 2, 2, 3, 3, 0
+      ]);
+
+    }else if(side === 0 && side2 === 1 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ])
+
+    }else if(side === 1 && side2 === 0 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ])
+
+    }else if(side === 1 && side2 === 0 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ])
+
+    }else if(side === 1 && side2 === 1 && side4 === 0){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ])
+
+    }else if(side === 1 && side2 === 1 && side4 === 1){
+      vertices = new Float32Array([
+        point3C.x, point3C.y, point3C.z,
+        point2C.x, point2C.y, point2C.z,
+        point2A.x, point2A.y, point2A.z,
+        point1B.x, point1B.y, point1B.z,
+        point4A.x, point4A.y, point4A.z,
+        point3C.x, point3C.y, point3C.z
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ])
 
 
+    }
 
+    squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+    scene.add(squareMesh);
 
+  }
 
+  createPolygon3B(side, side2, side4);
 
+  function createPolygon3C(side, side2, side5){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side2 === 0 && side5 === 0){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point3A.x, point3A.y, point3A.z,
+        point1D.x, point1D.y, point1D.z,
+        point1C.x, point1C.y, point1C.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ]);
+
+    }else if(side === 0 && side2 === 0 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point3A.x, point3A.y, point3A.z,
+        point1D.x, point1D.y, point1D.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ]);
+      
+    }else if(side === 0 && side2 === 1 && side5 === 0){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point3A.x, point3A.y, point3A.z,
+        point1C.x, point1C.y, point1C.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+
+      indices = new Uint16Array([
+           0, 1, 1, 2, 2, 3, 3, 0
+      ]);
+
+    }else if(side === 0 && side2 === 1 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point3A.x, point3A.y, point3A.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 0
+      ])
+
+    }else if(side === 1 && side2 === 0 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point3A.x, point3A.y, point3A.z,
+        point1D.x, point1D.y, point1D.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ])
+
+}else if(side === 1 && side2 === 1 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point3A.x, point3A.y, point3A.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 0
+      ])
+
+    }
+
+    squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+    scene.add(squareMesh);
+
+  }
+
+  createPolygon3C(side, side2, side5);
+
+  function createPolygon3D(side, side2, side5){
+
+    const squareGeometry = new THREE.BufferGeometry();
+    let vertices, indices;
+
+    if (side === 0 && side2 === 0 && side5 === 0){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point2C.x, point2C.y, point2C.z,
+        point2B.x, point2B.y, point2B.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ]);
+
+    }else if(side === 0 && side2 === 0 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point2C.x, point2C.y, point2C.z,
+        point2B.x, point2B.y, point2B.z,
+        point1C.x, point1C.y, point1C.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 4, 4, 0
+      ]);
+      
+    }else if(side === 0 && side2 === 1 && side5 === 0){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point2C.x, point2C.y, point2C.z,
+        point2B.x, point2B.y, point2B.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+
+      indices = new Uint16Array([
+           0, 1, 1, 2, 2, 3, 3, 0
+      ]);
+
+    }else if(side === 0 && side2 === 1 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point2C.x, point2C.y, point2C.z,
+        point2B.x, point2B.y, point2B.z,
+        point1C.x, point1C.y, point1C.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 3, 3, 4, 4, 0
+      ])
+
+    }else if(side === 1 && side2 === 0 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point2C.x, point2C.y, point2C.z,
+        point2B.x, point2B.y, point2B.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 2, 3, 3, 0
+      ])
+
+    }else if(side === 1 && side2 === 1 && side5 === 1){
+      vertices = new Float32Array([
+        point3D.x, point3D.y, point3D.z,
+        point2C.x, point2C.y, point2C.z,
+        point2B.x, point2B.y, point2B.z,
+        point4B.x, point4B.y, point4B.z,
+        point3D.x, point3D.y, point3D.z,
+      ]);
+  
+      indices = new Uint16Array([
+          0, 1, 1, 2, 3, 3, 0
+      ])
+
+    }
+
+    squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+    scene.add(squareMesh);
+
+  }
+
+  createPolygon3D(side, side2, side5);
+
+  function createPolygon3D() {
+  
+    // Create square Polygon from 4 points
+    const squareGeometry = new THREE.BufferGeometry();
+    const vertices = new Float32Array([
+      point2D.x, point2D.y, point2D.z,
+      point3E.x, point3E.y, point3E.z,
+      point4C.x, point4C.y, point4C.z,
+      point2A.x, point2A.y, point2A.z,
+      point2D.x, point2D.y, point2D.z
+    ]);
+
+    const indices = new Uint16Array([
+      0, 1, 1, 2, 2, 3, 3, 0
+    ]);
+
+    squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMesh = new THREE.Line(squareGeometry, squareMaterial);
+    scene.add(squareMesh);
+  }
+
+  createPolygon3D();
 
 }
 
