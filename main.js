@@ -2885,6 +2885,12 @@ function main() {
       });
 
   }
+
+  //gui.add({ refresh: function() {
+    // Call the main function again
+    //drawCity();
+    //createPolygons();
+  //}}, 'refresh').name('Refresh');
   
 }
 
