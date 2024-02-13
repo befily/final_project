@@ -23,14 +23,6 @@ let ambientLight;
 let directionalLight;
 let polygons = [];
 
-function drawPoint(point) {
-  const pointGeometry = new THREE.SphereGeometry(0.01, 8, 8); // Adjust radius and segments as needed
-  const pointMaterial = new THREE.MeshBasicMaterial({ color: 0xFFA500 }); // Red color, you can change it
-  const pointMesh = new THREE.Mesh(pointGeometry, pointMaterial);
-  pointMesh.position.copy(point);
-  scene.add(pointMesh);
-}
-
 function main() {
   // CREATE SCENE AND CAMERA
   scene = new THREE.Scene();
@@ -49,7 +41,7 @@ function main() {
   
   // GUI SETUP
   gui = new GUI();
-  gui.add(parameters, 'numIterations', 0, 4, 1).onChange(createPolygons);
+  gui.add(parameters, 'numIterations', 0, 4, 1).name('Split the Square').onChange(createPolygons);
 
   // RESPONSIVE WINDOW
   window.addEventListener('resize', handleResize);
@@ -79,14 +71,6 @@ function main() {
   const point1D = createPoint1D(angle3);
 
   const point2A = createPoint2A(angle1);
-  
-  
-  drawPoint(point1A);
-  drawPoint(point1B);
-  drawPoint(point1C);
-  drawPoint(point1D);
-  drawPoint(point2A);
-
 
 // Generate a random angle in radians between 10 and 90
   function randomAngle1() {
@@ -107,7 +91,6 @@ function main() {
 
     return angle3;
   }
-
 
   function createPoint1B(angle1) {
     const x = Math.sin(angle1);
@@ -157,9 +140,6 @@ function main() {
     return squareMesh;
   }
 
-  //createSquare(point1A, point1B, point1C, point1D);
-
-
   function createPoint2A(angle1) {
 
     const randomDistance = Math.random() * 0.7 + 0.2;
@@ -197,9 +177,7 @@ function main() {
     return {point2B, side};
   }
   const { point2B, side } = createPoint2B();
-  drawPoint(point2B);
   console.log('Side:', side);
-
 
   function createPolygon1A(side){
 
@@ -238,12 +216,10 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh1A = new THREE.Line(squareGeometry, squareMaterial);
     return squareMesh1A;
   }
-
-  //createPolygon1A(side);
 
   function createPolygon1B(side){
 
@@ -284,13 +260,10 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xfff000 }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh1B = new THREE.Line(squareGeometry, squareMaterial);
     return squareMesh1B;
   }
-
-  //createPolygon1B(side);
-
 
   function createPoint2C(point2A, point2B) {
 
@@ -300,9 +273,7 @@ function main() {
 
     return point2C;
   }
-
   const point2C = createPoint2C(point2A, point2B);
-  drawPoint(point2C);
 
   function createPoint2D(point2A, point2B) {
 
@@ -312,9 +283,7 @@ function main() {
 
     return point2D;
   }
-
   const point2D = createPoint2D(point2A, point2B);
-  drawPoint(point2D);
 
    function createPoint3A(){
     let point3A;
@@ -343,7 +312,6 @@ function main() {
     return {point3A, side2};
   }
   const { point3A, side2 } = createPoint3A();
-  drawPoint(point3A);
   console.log('Side 2:', side2); 
 
   function createPoint3B(){
@@ -373,7 +341,6 @@ function main() {
     return {point3B, side3};
   }
   const { point3B, side3 } = createPoint3B();
-  drawPoint(point3B);
   console.log('Side 3:', side3);
 
   function createPolygon2A(side, side2){
@@ -439,13 +406,11 @@ function main() {
   squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
   squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
   const squareMesh2A = new THREE.Line(squareGeometry, squareMaterial);
   return squareMesh2A;
 
   }
-
-  //createPolygon2A(side, side2);
 
   function createPolygon2B(side, side2){
 
@@ -508,13 +473,11 @@ function main() {
   squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
   squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
   const squareMesh2B = new THREE.Line(squareGeometry, squareMaterial);
   return squareMesh2B;
 
   }
-
-  //createPolygon2B(side, side2);
 
   function createPolygon2C(side, side3){
 
@@ -575,13 +538,11 @@ function main() {
   squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
   squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
   const squareMesh2C = new THREE.Line(squareGeometry, squareMaterial);
   return squareMesh2C;
 
   }
-
-  //createPolygon2C(side, side3);
 
   function createPolygon2D(side, side3){
 
@@ -645,13 +606,11 @@ function main() {
   squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
   squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-  const squareMaterial = new THREE.LineBasicMaterial({ color: 0x008000 }); // White color, you can change it
+  const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
   const squareMesh2D = new THREE.Line(squareGeometry, squareMaterial);
   return squareMesh2D;
 
   }
-
-  //createPolygon2D(side, side3);
 
   function createPoint3C(point2C, point3A) {
 
@@ -661,9 +620,7 @@ function main() {
 
     return point3C;
   }
-
   const point3C = createPoint3C(point2C, point3A);
-  drawPoint(point3C);
 
   function createPoint3D(point2C, point3A) {
 
@@ -673,10 +630,7 @@ function main() {
 
     return point3D;
   }
-
   const point3D = createPoint3D(point2C, point3A);
-  drawPoint(point3D);
-
 
   function createPoint3E(point2D, point3B) {
 
@@ -686,9 +640,7 @@ function main() {
 
     return point3E;
   }
-
   const point3E = createPoint3E(point2D, point3B);
-  drawPoint(point3E);
 
   function createPoint3F(point2D, point3B) {
 
@@ -698,9 +650,7 @@ function main() {
 
     return point3F;
   }
-
   const point3F = createPoint3F(point2D, point3B);
-  drawPoint(point3F);
 
   function createPoint4A(){
     let point4A;
@@ -729,12 +679,12 @@ function main() {
     return {point4A, side4};
   }
   const { point4A, side4 } = createPoint4A();
-  drawPoint(point4A);
   console.log('Side 4:', side4);
 
   function createPoint4B(){
     let point4B;
     let side5;
+
     if (point3D.x <= point1C.x)
     {
     // Steigung P1A - P1C
@@ -759,7 +709,6 @@ function main() {
     return {point4B, side5};
   }
   const { point4B, side5 } = createPoint4B();
-  drawPoint(point4B);
   console.log('Side 5:', side5);
 
   function createPoint4C(){
@@ -789,7 +738,6 @@ function main() {
     return {point4C, side6};
   }
   const { point4C, side6 } = createPoint4C();
-  drawPoint(point4C);
   console.log('Side 6:', side6);
 
   function createPoint4D(){
@@ -819,7 +767,6 @@ function main() {
     return {point4D, side7};
   }
   const { point4D, side7 } = createPoint4D();
-  drawPoint(point4D);
   console.log('Side 7:', side7);
 
   function createPolygon3A(side, side2, side4){
@@ -936,13 +883,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3A = new THREE.Line(squareGeometry, squareMaterial);
     
     return squareMesh3A;
   }
-
-  //createPolygon3A(side, side2, side4);
 
   function createPolygon3B(side, side2, side4){
 
@@ -1063,13 +1008,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3B = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh3B;
-
   }
-
-  //createPolygon3B(side, side2, side4);
 
   function createPolygon3C(side, side2, side5){
 
@@ -1158,13 +1101,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3C = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh3C;
-
   }
-
-  //createPolygon3C(side, side2, side5);
 
   function createPolygon3D(side, side2, side5){
 
@@ -1256,13 +1197,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3D = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh3D;
-
   }
-
-  //createPolygon3D(side, side2, side5);
 
   function createPolygon3E() {
   
@@ -1283,12 +1222,10 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3E = new THREE.Line(squareGeometry, squareMaterial);
     return squareMesh3E;
   }
-
-  //createPolygon3E();
 
   function createPolygon3F(side, side3, side6){
 
@@ -1377,13 +1314,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3F = new THREE.Line(squareGeometry, squareMaterial);
     return squareMesh3F;
 
   }
-
-  //createPolygon3F(side, side3, side6);
 
   function createPolygon3G(side, side3, side7){
 
@@ -1475,13 +1410,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3G = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh3G;
-
   }
-
-  //createPolygon3G(side, side3, side7);
 
   function createPolygon3H(side, side3, side7){
 
@@ -1570,13 +1503,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xff007f }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh3H = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh3H;
-
   }
-
-  //createPolygon3H(side, side3, side7);
 
   function createPoint4E(point3C, point4A) {
 
@@ -1586,9 +1517,7 @@ function main() {
 
     return point4E;
   }
-
   const point4E = createPoint4E(point3C, point4A);
-  drawPoint(point4E);
 
   function createPoint4F(point3C, point4A) {
 
@@ -1598,9 +1527,7 @@ function main() {
 
     return point4F;
   }
-
   const point4F = createPoint4F(point3C, point4A);
-  drawPoint(point4F);
 
   function createPoint4G(point3D, point4B) {
 
@@ -1610,9 +1537,7 @@ function main() {
 
     return point4G;
   }
-
   const point4G = createPoint4G(point3D, point4B);
-  drawPoint(point4G);
 
   function createPoint4H(point3D, point4B) {
 
@@ -1622,9 +1547,7 @@ function main() {
 
     return point4H;
   }
-
   const point4H = createPoint4H(point3D, point4B);
-  drawPoint(point4H);
   
   function createPoint4I(point3E, point4C) {
 
@@ -1634,9 +1557,7 @@ function main() {
 
     return point4I;
   }
-
   const point4I = createPoint4I(point3E, point4C);
-  drawPoint(point4I);
 
   function createPoint4J(point3E, point4C) {
 
@@ -1646,9 +1567,7 @@ function main() {
 
     return point4J;
   }
-
   const point4J = createPoint4J(point3E, point4C);
-  drawPoint(point4J);
 
   function createPoint4K(point3F, point4D) {
   
@@ -1658,9 +1577,7 @@ function main() {
 
     return point4K;
   }
-
   const point4K = createPoint4K(point3F, point4D);
-  drawPoint(point4K);
 
   function createPoint4L(point3F, point4D) {
 
@@ -1670,9 +1587,7 @@ function main() {
 
     return point4L;
   }
-
   const point4L = createPoint4L(point3F, point4D);
-  drawPoint(point4L);
 
   function createPoint5A(){
     let point5A;
@@ -1701,7 +1616,6 @@ function main() {
     return {point5A, side8};
   }
   const { point5A, side8 } = createPoint5A();
-  drawPoint(point5A);
   console.log('Side 8:', side8);
 
   function createPoint5B(){
@@ -1726,7 +1640,6 @@ function main() {
     return {point5B, side9};
   }
   const { point5B, side9 } = createPoint5B();
-  drawPoint(point5B);
   console.log('Side 9:', side9);
 
   function createPoint5C(){
@@ -1756,7 +1669,6 @@ function main() {
     return {point5C, side10};
   }
   const { point5C, side10 } = createPoint5C();
-  drawPoint(point5C);
   console.log('Side 10:', side10);
 
   function createPoint5D(){
@@ -1781,11 +1693,9 @@ function main() {
     return {point5D, side11};
   }
   const { point5D, side11 } = createPoint5D();
-  drawPoint(point5D);
   console.log('Side 11:', side11);
   
   const point5E = new THREE.Vector3(point2A.x, point4I.y, 0);
-  drawPoint(point5E);
 
   function createPoint5F(){
     let point5F;
@@ -1814,7 +1724,6 @@ function main() {
     return {point5F, side12};
   }
   const { point5F, side12 } = createPoint5F();
-  drawPoint(point5F);
   console.log('Side 12:', side12);
 
   function createPoint5G(){
@@ -1838,7 +1747,6 @@ function main() {
     return {point5G, side13};
   }
   const { point5G, side13 } = createPoint5G();
-  drawPoint(point5G);
   console.log('Side 13:', side13);
 
   function createPoint5H(){
@@ -1868,7 +1776,6 @@ function main() {
     return {point5H, side14};
   }
   const { point5H, side14 } = createPoint5H();
-  drawPoint(point5H);
   console.log('Side 14:', side14);
 
   function createPolygon4A(side4, side8){
@@ -1932,13 +1839,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4A = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4A;
-
   }
-
-  //createPolygon4A(side4, side8);
 
   function createPolygon4B(side4, side9){
 
@@ -2001,13 +1906,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4B = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4B;
-
   }
-
-  //createPolygon4B(side4, side9);
 
   function createPolygon4C(side2, side8){
 
@@ -2058,13 +1961,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4C = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4C;
-
   }
-
-  //createPolygon4C(side2, side8);
 
   function createPolygon4D(side9){
 
@@ -2102,13 +2003,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4D = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4D;
-
   }
-
-  //createPolygon4D(side9);
 
   function createPolygon4E(side2, side10){
 
@@ -2159,13 +2058,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4E = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4E;
-
   }
-
-  //createPolygon4E(side2, side10);
 
   function createPolygon4G(side5, side10){
 
@@ -2228,13 +2125,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4G = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4G;
-
   }
-
-  //createPolygon4G(side5, side10);
 
   function createPolygon4F(side11){
 
@@ -2272,13 +2167,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4F = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4F;
-
   }
-
-  //createPolygon4F(side11);
 
   function createPolygon4H(side, side5){
 
@@ -2329,13 +2222,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4H = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4H;
-
   }
-
-  //createPolygon4H(side, side5);
 
   function createPolygon4I(){
 
@@ -2357,11 +2248,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4I = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4I;
   }
-  //createPolygon4I();
 
   function createPolygon4J(side12){
 
@@ -2397,13 +2288,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4J = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4J;
-
   }
-
-  //createPolygon4J(side12);
 
   function createPolygon4K(){
 
@@ -2427,12 +2316,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4K = new THREE.Line(squareGeometry, squareMaterial);
+   
     return squareMesh4K;
   }
-
-  //createPolygon4K();
 
   function createPolygon4L(side3, side12){
 
@@ -2483,13 +2371,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4L = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4L;
-
   }
-
-  //createPolygon4L(side3, side12);
 
   function createPolygon4M(side13){
 
@@ -2526,12 +2412,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4M = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4M;
   }
-  
-  //createPolygon4M();
 
   function createPolygon4N(side3, side14){
 
@@ -2582,13 +2467,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4N = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4N;
-
   }
-
-  //createPolygon4N(side3, side14);
 
   function createPolygon4O(side, side7){
 
@@ -2653,13 +2536,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4O = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4O;
-
   }
-
-  //createPolygon4O(side, side7);
 
   function createPolygon4P(side7, side14){
 
@@ -2722,13 +2603,11 @@ function main() {
     squareGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     squareGeometry.setIndex(new THREE.BufferAttribute(indices, 1));
 
-    const squareMaterial = new THREE.LineBasicMaterial({ color: 0x7DF9FF }); // White color, you can change it
+    const squareMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White color, you can change it
     const squareMesh4P = new THREE.Line(squareGeometry, squareMaterial);
+    
     return squareMesh4P;
-
   }
-
-  //createPolygon4P(side7, side14);
 
   const squareMesh = createSquare(point1A, point1B, point1C, point1D);
   const squareMesh1A = createPolygon1A(side);
@@ -2746,7 +2625,7 @@ function main() {
   const squareMesh3G = createPolygon3G(side, side3, side7);
   const squareMesh3H = createPolygon3H(side, side3, side7);
   const squareMesh4A = createPolygon4A(side4, side8);
-  const squareMesh4B = createPolygon4A(side4, side9);
+  const squareMesh4B = createPolygon4B(side4, side9);
   const squareMesh4C = createPolygon4C(side2, side8);
   const squareMesh4D = createPolygon4D(side9);
   const squareMesh4E = createPolygon4E(side2, side10);
@@ -2762,8 +2641,14 @@ function main() {
   const squareMesh4O = createPolygon4O(side, side7);
   const squareMesh4P = createPolygon4P(side7, side14);
 
+  scene.add(squareMesh);
 
   function createPolygons (numIterations){
+
+    for (let i=0; i<polygons.length; i++){
+      let poly = polygons[i]
+      scene.remove(poly)
+    } 
 
     polygons = [ ];
 
@@ -2812,7 +2697,6 @@ function main() {
       polygons.push(squareMesh4N);
       polygons.push(squareMesh4O);
       polygons.push(squareMesh4P);
-
     }
 
     polygons.forEach(mesh => {
